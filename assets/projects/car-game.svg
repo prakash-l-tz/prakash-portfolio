@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0420"/>
+      <stop offset="1" stop-color="#4c0f6b"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde047"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a0630"/>
+      <stop offset="1" stop-color="#05010d"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <radialGradient id="tail"><stop offset="0" stop-color="#ff4d6d"/><stop offset="1" stop-color="#ff4d6d" stop-opacity="0"/></radialGradient>
+    <clipPath id="sunClip"><circle cx="400" cy="210" r="110"/></clipPath>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#sky)"/>
+  <g fill="#ffffff">
+    <circle cx="90" cy="60" r="1.5"/><circle cx="210" cy="120" r="1"/><circle cx="640" cy="50" r="1.6"/>
+    <circle cx="720" cy="140" r="1"/><circle cx="520" cy="90" r="1.1"/><circle cx="300" cy="40" r="1.2"/>
+  </g>
+
+  <!-- striped sun -->
+  <g clip-path="url(#sunClip)">
+    <rect x="290" y="100" width="220" height="220" fill="url(#sun)"/>
+    <g fill="#2a0845">
+      <rect x="290" y="232" width="220" height="5"/><rect x="290" y="250" width="220" height="7"/>
+      <rect x="290" y="270" width="220" height="9"/><rect x="290" y="292" width="220" height="11"/>
+    </g>
+  </g>
+  <!-- city skyline -->
+  <path d="M0 300 V260 h40 v-30 h30 v40 h30 v-55 h40 v45 h30 v-20 h40 v40 h40 V300 Z M520 300 V270 h40 v-50 h30 v30 h40 v-40 h40 v55 h30 v-25 h40 v20 h60 V300 Z" fill="#14052a"/>
+
+  <!-- ground + perspective grid -->
+  <rect x="0" y="300" width="800" height="200" fill="url(#ground)"/>
+  <g stroke="#e879f9" stroke-opacity=".55" stroke-width="1.5">
+    <line x1="0" y1="300" x2="800" y2="300" stroke-opacity=".9" stroke-width="2"/>
+    <line x1="0" y1="312" x2="800" y2="312"/><line x1="0" y1="330" x2="800" y2="330"/>
+    <line x1="0" y1="356" x2="800" y2="356"/><line x1="0" y1="392" x2="800" y2="392"/>
+    <line x1="0" y1="440" x2="800" y2="440"/>
+    <line x1="400" y1="300" x2="-400" y2="500"/><line x1="400" y1="300" x2="-100" y2="500"/>
+    <line x1="400" y1="300" x2="1200" y2="500"/><line x1="400" y1="300" x2="900" y2="500"/>
+  </g>
+  <!-- road -->
+  <path d="M370 300 L430 300 L620 500 L180 500 Z" fill="#0b0716"/>
+  <path d="M370 300 L180 500 M430 300 L620 500" stroke="#22d3ee" stroke-width="3"/>
+  <g fill="#fde047">
+    <path d="M398 310 h4 l2 18 h-8 z"/><path d="M396 345 h8 l3 30 h-14 z"/><path d="M393 400 h14 l5 50 h-24 z"/>
+  </g>
+
+  <!-- speed lines -->
+  <g stroke="#ffffff" stroke-opacity=".5" stroke-width="2" stroke-linecap="round">
+    <line x1="150" y1="380" x2="60" y2="420"/><line x1="190" y1="420" x2="110" y2="470"/>
+    <line x1="650" y1="380" x2="740" y2="420"/><line x1="610" y1="420" x2="690" y2="470"/>
+  </g>
+
+  <!-- car (rear view) -->
+  <g transform="translate(400 410)">
+    <ellipse cx="0" cy="62" rx="120" ry="12" fill="#000000" opacity=".55"/>
+    <rect x="-108" y="20" width="34" height="44" rx="8" fill="#111827"/>
+    <rect x="74" y="20" width="34" height="44" rx="8" fill="#111827"/>
+    <path d="M-62 -36 L62 -36 L84 0 L-84 0 Z" fill="#0e7490"/>
+    <path d="M-52 -30 L52 -30 L68 -4 L-68 -4 Z" fill="#0b1220" opacity=".85"/>
+    <rect x="-112" y="-4" width="224" height="52" rx="16" fill="url(#body)"/>
+    <rect x="-120" y="2" width="20" height="10" rx="4" fill="#1d4ed8"/>
+    <rect x="100" y="2" width="20" height="10" rx="4" fill="#1d4ed8"/>
+    <circle cx="-74" cy="16" r="34" fill="url(#tail)"/>
+    <circle cx="74" cy="16" r="34" fill="url(#tail)"/>
+    <rect x="-98" y="8" width="52" height="14" rx="5" fill="#ff1f4b"/>
+    <rect x="46" y="8" width="52" height="14" rx="5" fill="#ff1f4b"/>
+    <rect x="-28" y="22" width="56" height="14" rx="3" fill="#f8fafc"/>
+    <text x="0" y="33" fill="#0f172a" font-size="10" font-weight="800" text-anchor="middle">GO 01</text>
+  </g>
+
+  <!-- HUD -->
+  <g font-weight="800">
+    <rect x="30" y="28" width="150" height="54" rx="12" fill="#000000" fill-opacity=".35" stroke="#e879f9" stroke-opacity=".6"/>
+    <text x="46" y="50" fill="#f0abfc" font-size="11" letter-spacing="2">SCORE</text>
+    <text x="46" y="72" fill="#ffffff" font-size="20">02,450</text>
+    <rect x="620" y="28" width="150" height="54" rx="12" fill="#000000" fill-opacity=".35" stroke="#22d3ee" stroke-opacity=".6"/>
+    <text x="636" y="50" fill="#67e8f9" font-size="11" letter-spacing="2">SPEED</text>
+    <text x="636" y="72" fill="#ffffff" font-size="20">186 km/h</text>
+    <text x="400" y="60" fill="#fde047" font-size="22" letter-spacing="6" text-anchor="middle">LAP 2/3</text>
+  </g>
+</svg>

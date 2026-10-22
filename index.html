@@ -18,13 +18,22 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=Sora:wght@400..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Decorative 3D background (globe + stars) that moves while scrolling -->
+  <div class="scroll-bg" aria-hidden="true">
+    <canvas class="bg3d" id="bg3d"></canvas>
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
+  <div class="scroll-progress" aria-hidden="true"></div>
 
   <!-- ============ NAVIGATION ============ -->
   <header class="site-header" id="siteHeader">
@@ -67,6 +76,8 @@
             <a class="btn btn-outline" href="#achievements">My Achievements</a>
             <a class="btn btn-ghost" href="#contact">Contact Me</a>
           </div>
+          <!-- 3D social buttons (filled from CONTACT in js/data.js) -->
+          <div class="social-3d"></div>
         </div>
 
         <div class="hero-photo reveal">
@@ -123,7 +134,19 @@
               <div>
                 <h3>Software Engineer &amp; Android Developer</h3>
                 <p>Tamilzorous Private Limited</p>
-                <p class="muted">Current role</p>
+                <p class="muted">2025 – Present</p>
+              </div>
+            </article>
+
+            <!-- EDIT: previous experience -->
+            <article class="info-card">
+              <span class="info-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>
+              </span>
+              <div>
+                <h3>Sales Manager (Part-time)</h3>
+                <p>DMart, Salem</p>
+                <p class="muted">2024 – 2025 · 1 year 3 months</p>
               </div>
             </article>
           </div>
@@ -148,7 +171,7 @@
         <div class="section-head center reveal">
           <p class="kicker">Projects</p>
           <h2>Things I've built and worked on</h2>
-          <p class="section-sub">Some are company projects, so their source code is private.</p>
+          <p class="section-sub">Apps and games I've designed and built.</p>
         </div>
         <div class="projects-grid" id="projectsGrid"></div>
       </div>
@@ -185,6 +208,7 @@
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>
               Download Resume
             </a>
+            <div class="social-3d"></div>
           </div>
 
           <div class="contact-side">
@@ -210,6 +234,13 @@
       </div>
     </section>
   </main>
+
+  <!-- Floating 3D WhatsApp chat button (link set from CONTACT.whatsapp) -->
+  <a class="whatsapp-fab" id="whatsappFab" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp" hidden>
+    <span class="s3d-face">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.65-4.4A9 9 0 1 1 8 19.6z"/><path d="M9 8.2c-.4 3.6 3.2 7.2 6.8 6.8l.7-1.6-2-1-.9.8c-1-.4-2.4-1.8-2.8-2.8l.8-.9-1-2z" fill="currentColor" stroke-width="1"/></svg>
+    </span>
+  </a>
 
   <footer class="site-footer">
     <div class="container footer-inner">

@@ -43,11 +43,46 @@ body {
   line-height: 1.65;
   color: var(--text);
   background: var(--bg);
-  background-image:
-    radial-gradient(800px 500px at 90% -10%, rgba(34, 211, 238, .10), transparent 70%),
-    radial-gradient(700px 500px at -10% 30%, rgba(79, 143, 247, .10), transparent 70%);
-  background-repeat: no-repeat;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Scrolling background ----------
+   --scroll goes from 0 (top) to 1 (bottom); it is set by js/script.js.
+   The glows drift and the dot grid slides slowly as you scroll. */
+.scroll-bg {
+  position: fixed; inset: 0; z-index: -1;
+  overflow: hidden; pointer-events: none;
+}
+.scroll-bg::before {
+  content: ""; position: absolute; inset: -400px 0 0;
+  background-image: radial-gradient(rgba(163, 179, 207, .13) 1px, transparent 1.4px);
+  background-size: 30px 30px;
+  transform: translate3d(0, calc(var(--scroll, 0) * 400px), 0);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 40%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 40%, #000 70%, transparent);
+}
+.bg3d { position: absolute; inset: 0; width: 100%; height: 100%; }
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); opacity: .28; will-change: transform;
+}
+.orb-1 {
+  width: 560px; height: 560px; top: -180px; right: -160px; background: var(--cyan);
+  transform: translate3d(calc(var(--scroll, 0) * -45vw), calc(var(--scroll, 0) * 70vh), 0);
+}
+.orb-2 {
+  width: 480px; height: 480px; top: 35%; left: -200px; background: var(--blue);
+  transform: translate3d(calc(var(--scroll, 0) * 35vw), calc(var(--scroll, 0) * -30vh), 0) scale(calc(1 + var(--scroll, 0) * .3));
+}
+.orb-3 {
+  width: 420px; height: 420px; bottom: -220px; left: 40%; background: #a855f7; opacity: .18;
+  transform: translate3d(calc(var(--scroll, 0) * -20vw), calc(var(--scroll, 0) * -45vh), 0);
+}
+.scroll-progress {
+  position: fixed; top: 0; left: 0; z-index: 150;
+  width: 100%; height: 3px; transform-origin: left center;
+  transform: scaleX(var(--scroll, 0));
+  background: linear-gradient(90deg, var(--cyan), var(--blue), #a855f7);
 }
 
 img { max-width: 100%; display: block; }
@@ -187,7 +222,7 @@ p { margin: 0 0 1rem; }
 
 /* ---------- Sections ---------- */
 .section { padding: clamp(64px, 9vw, 104px) 0; }
-.section-alt { background: var(--bg-alt); border-block: 1px solid rgba(34, 54, 96, .5); }
+.section-alt { background: rgba(13, 26, 51, .55); border-block: 1px solid rgba(34, 54, 96, .5); }
 .section-head { margin-bottom: 40px; }
 .section-head.center { text-align: center; margin-inline: auto; max-width: 680px; }
 .section-head h2 { font-size: clamp(1.75rem, 3.6vw, 2.5rem); }
@@ -204,7 +239,7 @@ p { margin: 0 0 1rem; }
 .info-cards { display: grid; gap: 16px; margin-top: 28px; }
 .info-card {
   display: flex; gap: 16px; align-items: flex-start;
-  padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px; background: rgba(17, 31, 61, .85); border: 1px solid var(--line); border-radius: var(--radius);
 }
 .info-card h3 { font-size: 1.05rem; margin-bottom: 4px; }
 .info-card p { margin: 0; color: var(--text); font-size: .975rem; }
@@ -217,7 +252,9 @@ p { margin: 0 0 1rem; }
 
 /* ---------- Cards (shared) ---------- */
 .card {
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  position: relative;
+  background: linear-gradient(160deg, rgba(22, 39, 73, .86), rgba(14, 26, 52, .82));
+  border: 1px solid var(--line); border-radius: var(--radius);
   transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 .card:hover { transform: translateY(-4px); border-color: rgba(34, 211, 238, .45); box-shadow: var(--shadow); }
@@ -248,7 +285,15 @@ p { margin: 0 0 1rem; }
 /* ---------- Projects ---------- */
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
 .project-card { overflow: hidden; display: flex; flex-direction: column; }
-.project-media { aspect-ratio: 16 / 10; background: var(--surface-2); border-bottom: 1px solid var(--line); overflow: hidden; }
+.project-media { position: relative; aspect-ratio: 16 / 10; background: var(--surface-2); border-bottom: 1px solid var(--line); overflow: hidden; }
+.project-status {
+  position: absolute; top: 12px; left: 12px;
+  padding: 5px 12px; border-radius: 999px;
+  background: linear-gradient(90deg, #f59e0b, #f97316); color: #1c1917;
+  font-size: .78rem; font-weight: 800; letter-spacing: .02em;
+  box-shadow: 0 6px 16px -6px rgba(249, 115, 22, .7);
+}
+.project-status.inline { position: static; display: inline-block; margin-bottom: 12px; }
 .project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
 .project-card:hover .project-media img { transform: scale(1.04); }
 .project-body { padding: 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
@@ -414,6 +459,123 @@ a.contact-item:hover { text-decoration: none; border-color: var(--cyan); transfo
 
 .noscript { text-align: center; padding: 16px; background: var(--surface); margin: 0; }
 
+/* ---------- 3D social buttons ----------
+   Each button is a raised block: the coloured face sits on a darker
+   "side" (the solid shadow below it). It floats gently, and on hover
+   it turns to face you and lifts; pressing pushes it down. */
+.social-3d { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px; perspective: 700px; }
+.social-3d:empty { display: none; }
+.contact-intro .social-3d { margin-top: 22px; }
+.s3d {
+  --c1: #3b4252; --c2: #1f2430; --edge: #0b0d12; --glow: rgba(0, 0, 0, .5);
+  display: block; border-radius: 16px; color: #fff;
+  animation: s3dFloat 4s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -.7s);
+}
+.s3d:hover { text-decoration: none; }
+.s3d-face {
+  position: relative; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 16px;
+  background: linear-gradient(145deg, var(--c1), var(--c2));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .4),
+    inset 0 -6px 12px rgba(0, 0, 0, .18),
+    0 6px 0 var(--edge),
+    0 16px 24px -8px var(--glow);
+  transform: rotateX(20deg) rotateY(-16deg);
+  transition: transform .4s cubic-bezier(.2, .8, .2, 1.3), box-shadow .3s ease;
+}
+.s3d-face::before {           /* glossy highlight */
+  content: ""; position: absolute; inset: 3px 3px 50% 3px; border-radius: 13px 13px 40% 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .35), transparent);
+  pointer-events: none;
+}
+.s3d-face svg { position: relative; width: 26px; height: 26px; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .35)); }
+.s3d:hover .s3d-face, .s3d:focus-visible .s3d-face {
+  transform: rotateX(0) rotateY(0) translateY(-6px) scale(1.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -6px 12px rgba(0, 0, 0, .18), 0 10px 0 var(--edge), 0 26px 34px -8px var(--glow);
+}
+.s3d:active .s3d-face {
+  transform: translateY(4px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 2px 0 var(--edge), 0 6px 10px -4px var(--glow);
+  transition-duration: .08s;
+}
+.s3d-whatsapp, .whatsapp-fab { --c1: #2ee879; --c2: #128c7e; --edge: #0a5a51; --glow: rgba(37, 211, 102, .55); }
+.s3d-instagram { --c1: #f9a83b; --c2: #c13584; --edge: #6a1b6e; --glow: rgba(214, 41, 118, .55); }
+.s3d-instagram .s3d-face { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fd5949 40%, #d6249f 65%, #285aeb 100%); }
+.s3d-linkedin { --c1: #2b8fe6; --c2: #0a66c2; --edge: #063f78; --glow: rgba(10, 102, 194, .55); }
+@keyframes s3dFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+/* Floating WhatsApp button */
+.whatsapp-fab {
+  position: fixed; right: 22px; bottom: 26px; z-index: 120;
+  border-radius: 50%; color: #fff; perspective: 600px;
+  animation: s3dFloat 3.5s ease-in-out infinite;
+}
+.whatsapp-fab[hidden] { display: none; }
+.whatsapp-fab .s3d-face {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(145deg, var(--c1), var(--c2));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -6px 12px rgba(0, 0, 0, .2), 0 6px 0 var(--edge), 0 18px 28px -8px var(--glow);
+  transition: transform .4s cubic-bezier(.2, .8, .2, 1.3);
+}
+.whatsapp-fab .s3d-face::before { border-radius: 50% 50% 40% 40%; }
+.whatsapp-fab .s3d-face svg { width: 30px; height: 30px; }
+.whatsapp-fab::before {      /* pulsing ring */
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid #25d366; animation: fabPulse 2.4s ease-out infinite;
+}
+.whatsapp-fab:hover .s3d-face { transform: translateY(-4px) rotateY(360deg); transition-duration: .7s; }
+.whatsapp-fab:hover { text-decoration: none; }
+@keyframes fabPulse { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.7); opacity: 0; } }
+
+/* Contact list icons in brand colours */
+.contact-item .ci-whatsapp { background: rgba(37, 211, 102, .14); color: #4ade80; }
+.contact-item .ci-instagram { background: rgba(214, 41, 118, .14); color: #f472b6; }
+
+/* ---------- 3D tilt on hover (class added by js/script.js) ---------- */
+.tilt, .js .tilt.reveal.visible {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: opacity .6s ease, transform .2s ease-out, border-color .25s ease, box-shadow .25s ease;
+}
+.card.tilt:hover, .js .card.tilt.reveal.visible:hover {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px);
+  box-shadow: 0 30px 50px -24px rgba(0, 0, 0, .8), 0 20px 60px -30px rgba(34, 211, 238, .5);
+}
+.info-card.tilt { position: relative; }
+.tilt::after {
+  content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .13), transparent 50%);
+  opacity: 0; transition: opacity .25s ease;
+}
+.tilt:hover::after { opacity: 1; }
+.hero-photo.tilt::after { border-radius: 32px; }
+
+/* ---------- Main text turns bold on hover ----------
+   Headings use a heavier font weight. Paragraphs get a thin outline
+   instead, so they look bolder without the lines re-wrapping. */
+.hero h1, .hero-title, .section-head h2, .contact-intro h2, .kicker,
+.card h3, .info-card h3 {
+  transition: font-weight .25s ease, color .25s ease, text-shadow .25s ease;
+}
+.hero h1 { font-weight: 700; }
+.section-head h2, .contact-intro h2 { font-weight: 600; }
+.hero h1:hover, .section-head h2:hover, .contact-intro h2:hover {
+  font-weight: 800;
+  text-shadow: 0 0 24px rgba(34, 211, 238, .35);
+}
+.hero-title:hover, .kicker:hover { font-weight: 800; }
+.card h3, .info-card h3 { font-weight: 600; }
+.card h3:hover, .info-card h3:hover, .card:hover h3 { font-weight: 800; color: #fff; }
+
+.hero-intro, .about-body p, .section-sub, .contact-intro p, .card p {
+  transition: color .25s ease, -webkit-text-stroke-color .25s ease;
+  -webkit-text-stroke: .45px transparent;
+}
+.hero-intro:hover, .about-body p:hover, .section-sub:hover, .contact-intro p:hover, .card p:hover {
+  color: var(--text);
+  -webkit-text-stroke-color: currentColor;
+}
+
 /* ---------- Scroll reveal (only when JS is on) ---------- */
 .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
 .js .reveal.visible { opacity: 1; transform: none; }
@@ -430,7 +592,7 @@ a.contact-item:hover { text-decoration: none; border-color: var(--cyan); transfo
   .hero-text { order: 2; }
   .hero-photo { order: 1; width: min(300px, 80%); }
   .hero-intro { margin-inline: auto; }
-  .hero-actions { justify-content: center; }
+  .hero-actions, .hero-text .social-3d { justify-content: center; }
   .photo-badge { left: 50%; transform: translateX(-50%); bottom: -20px; white-space: nowrap; align-items: center; }
   .about-grid { grid-template-columns: 1fr; }
   .ach-card.featured { grid-template-columns: 1fr; }
@@ -473,4 +635,5 @@ a.contact-item:hover { text-decoration: none; border-color: var(--cyan); transfo
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .js .reveal { opacity: 1; transform: none; }
+  .orb, .scroll-bg::before { transform: none !important; }
 }

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1428"/>
+      <stop offset="1" stop-color="#1c1917"/>
+    </linearGradient>
+    <radialGradient id="g1"><stop offset="0" stop-color="#f59e0b" stop-opacity=".45"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>
+    <radialGradient id="g2"><stop offset="0" stop-color="#4f8ff7" stop-opacity=".45"/><stop offset="1" stop-color="#4f8ff7" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#f97316"/></linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".05"/></pattern>
+    <clipPath id="map"><rect x="140" y="110" width="300" height="250" rx="14"/></clipPath>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#grid)"/>
+  <circle cx="120" cy="420" r="260" fill="url(#g1)"/>
+  <circle cx="700" cy="80" r="260" fill="url(#g2)"/>
+
+  <!-- dashboard / tablet -->
+  <rect x="110" y="70" width="580" height="320" rx="26" fill="#050b18" stroke="#334155" stroke-width="2"/>
+  <rect x="122" y="82" width="556" height="296" rx="18" fill="#0f1b33"/>
+  <text x="140" y="104" fill="#e8eef9" font-size="14" font-weight="800">My Fleet</text>
+
+  <g clip-path="url(#map)">
+    <rect x="140" y="110" width="300" height="250" fill="#13223f"/>
+    <path d="M140 170 L440 150 M140 280 L440 300 M210 110 L230 360 M360 110 L340 360" stroke="#223660" stroke-width="10"/>
+    <path d="M180 330 C 230 250, 300 260, 330 190 S 400 140, 420 130" stroke="#f59e0b" stroke-width="3" stroke-dasharray="7 6" fill="none"/>
+    <g>
+      <circle cx="230" cy="265" r="15" fill="#f59e0b" fill-opacity=".25"/>
+      <circle cx="230" cy="265" r="7" fill="#f59e0b" stroke="#fff" stroke-width="2"/>
+      <circle cx="345" cy="178" r="15" fill="#22d3ee" fill-opacity=".25"/>
+      <circle cx="345" cy="178" r="7" fill="#22d3ee" stroke="#fff" stroke-width="2"/>
+      <circle cx="400" cy="300" r="15" fill="#34d399" fill-opacity=".25"/>
+      <circle cx="400" cy="300" r="7" fill="#34d399" stroke="#fff" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- vehicle list -->
+  <g font-size="12">
+    <rect x="460" y="110" width="200" height="72" rx="12" fill="#ffffff" fill-opacity=".05"/>
+    <rect x="474" y="126" width="40" height="40" rx="10" fill="#f59e0b" fill-opacity=".2"/>
+    <path d="M480 152 h28 v-10 l-6 -8 h-12 v18 M480 152 v-14 h10" stroke="#fbbf24" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+    <text x="526" y="142" fill="#e8eef9" font-weight="700">TN 30 AB 1234</text>
+    <text x="526" y="160" fill="#fbbf24">On route · 54 km/h</text>
+
+    <rect x="460" y="192" width="200" height="72" rx="12" fill="#ffffff" fill-opacity=".05"/>
+    <rect x="474" y="208" width="40" height="40" rx="10" fill="#22d3ee" fill-opacity=".2"/>
+    <path d="M480 234 h28 v-10 l-6 -8 h-12 v18 M480 234 v-14 h10" stroke="#22d3ee" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+    <text x="526" y="224" fill="#e8eef9" font-weight="700">TN 28 CD 5678</text>
+    <text x="526" y="242" fill="#67e8f9">Loading · Depot 2</text>
+
+    <rect x="460" y="274" width="200" height="72" rx="12" fill="#ffffff" fill-opacity=".05"/>
+    <rect x="474" y="290" width="40" height="40" rx="10" fill="#34d399" fill-opacity=".2"/>
+    <path d="M480 316 h28 v-10 l-6 -8 h-12 v18 M480 316 v-14 h10" stroke="#34d399" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+    <text x="526" y="306" fill="#e8eef9" font-weight="700">TN 01 EF 9012</text>
+    <text x="526" y="324" fill="#6ee7b7">Idle · Fuel 82%</text>
+  </g>
+
+  <!-- truck silhouette -->
+  <g transform="translate(470 395)">
+    <rect x="0" y="10" width="150" height="56" rx="8" fill="#1e293b" stroke="#475569"/>
+    <path d="M150 26 h34 l22 22 v18 h-56 z" fill="#f59e0b"/>
+    <path d="M160 32 h20 l14 14 h-34 z" fill="#0f172a"/>
+    <circle cx="36" cy="70" r="14" fill="#0f172a" stroke="#94a3b8" stroke-width="4"/>
+    <circle cx="180" cy="70" r="14" fill="#0f172a" stroke="#94a3b8" stroke-width="4"/>
+  </g>
+
+  <!-- coming soon ribbon -->
+  <g transform="rotate(-8 230 430)">
+    <rect x="40" y="404" width="380" height="58" rx="12" fill="url(#ribbon)"/>
+    <text x="230" y="442" fill="#1c1917" font-size="26" font-weight="900" letter-spacing="4" text-anchor="middle">COMING SOON</text>
+  </g>
+</svg>

@@ -10,7 +10,8 @@
      5. Lightbox (image preview)
      6. Project details modal
      7. Contact form (mailto) and resume button
-     8. Scroll reveal + start-up
+     8. Scroll background, 3D background and 3D card tilt
+     9. Scroll reveal + start-up
    ===================================================================== */
 
 (function () {
@@ -45,6 +46,8 @@
     github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>',
     linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>',
     phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
+    whatsapp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-4.4A9 9 0 1 1 8 19.6z"/><path d="M9 8.2c-.4 3.6 3.2 7.2 6.8 6.8l.7-1.6-2-1-.9.8c-1-.4-2.4-1.8-2.8-2.8l.8-.9-1-2z" fill="currentColor" stroke-width="1"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>',
     location: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
   };
 
@@ -91,13 +94,14 @@
     const grid = document.getElementById("projectsGrid");
     grid.innerHTML = PROJECTS.map(function (p, i) {
       const media = p.image
-        ? '<img src="' + esc(p.image) + '" alt="Screenshot of ' + esc(p.title) + '" loading="lazy" decoding="async">'
+        ? '<img src="' + esc(p.image) + '" alt="' + esc(p.title) + ' preview" loading="lazy" decoding="async">'
         : placeholderHTML("Screenshot coming soon");
+      const status = p.status ? '<span class="project-status">' + esc(p.status) + "</span>" : "";
       const github = p.link
         ? '<a class="btn btn-ghost btn-sm" href="' + esc(p.link) + '" target="_blank" rel="noopener">Source / Link ↗</a>'
         : "";
       return '<article class="card project-card reveal">' +
-        '<div class="project-media">' + media + "</div>" +
+        '<div class="project-media">' + media + status + "</div>" +
         '<div class="project-body">' +
           "<h3>" + esc(p.title) + "</h3>" +
           "<p>" + esc(p.description) + "</p>" +
@@ -153,15 +157,40 @@
     if (CONTACT.github) items.push({ icon: "github", label: "GitHub", text: CONTACT.github.replace(/^https?:\/\/(www\.)?/, ""), href: CONTACT.github, external: true });
     if (CONTACT.linkedin) items.push({ icon: "linkedin", label: "LinkedIn", text: CONTACT.linkedin.replace(/^https?:\/\/(www\.)?/, ""), href: CONTACT.linkedin, external: true });
     if (CONTACT.phone) items.push({ icon: "phone", label: "Phone", text: CONTACT.phone, href: "tel:" + CONTACT.phone.replace(/[^\d+]/g, "") });
+    if (CONTACT.whatsapp) items.push({ icon: "whatsapp", label: "WhatsApp", text: "+" + CONTACT.whatsapp.replace(/^(\d{2})(\d{5})(\d+)$/, "$1 $2 $3"), href: whatsappLink(), external: true });
+    if (CONTACT.instagram) items.push({ icon: "instagram", label: "Instagram", text: "@" + CONTACT.instagram.replace(/\/+$/, "").split("/").pop(), href: CONTACT.instagram, external: true });
     if (CONTACT.location) items.push({ icon: "location", label: "Location", text: CONTACT.location });
 
     document.getElementById("contactList").innerHTML = items.map(function (c) {
-      const inner = '<span class="ci-icon" aria-hidden="true">' + ICONS[c.icon] + "</span>" +
+      const inner = '<span class="ci-icon ci-' + c.icon + '" aria-hidden="true">' + ICONS[c.icon] + "</span>" +
         "<span><small>" + esc(c.label) + "</small><strong>" + esc(c.text) + "</strong></span>";
       if (!c.href) return '<li><div class="contact-item">' + inner + "</div></li>";
       const ext = c.external ? ' target="_blank" rel="noopener"' : "";
       return '<li><a class="contact-item" href="' + esc(c.href) + '"' + ext + ">" + inner + "</a></li>";
     }).join("");
+  }
+
+  function whatsappLink() {
+    return "https://wa.me/" + CONTACT.whatsapp.replace(/\D/g, "");
+  }
+
+  // 3D social buttons (hero + contact) and the floating WhatsApp button
+  function renderSocial() {
+    const list = [];
+    if (CONTACT.whatsapp) list.push({ icon: "whatsapp", label: "WhatsApp", href: whatsappLink() });
+    if (CONTACT.instagram) list.push({ icon: "instagram", label: "Instagram", href: CONTACT.instagram });
+    if (CONTACT.github) list.push({ icon: "github", label: "GitHub", href: CONTACT.github });
+    if (CONTACT.linkedin) list.push({ icon: "linkedin", label: "LinkedIn", href: CONTACT.linkedin });
+
+    const html = list.map(function (s, i) {
+      return '<a class="s3d s3d-' + s.icon + '" href="' + esc(s.href) + '" target="_blank" rel="noopener"' +
+        ' aria-label="' + esc(s.label) + '" title="' + esc(s.label) + '" style="--i:' + i + '">' +
+        '<span class="s3d-face">' + ICONS[s.icon] + "</span></a>";
+    }).join("");
+    document.querySelectorAll(".social-3d").forEach(function (box) { box.innerHTML = html; });
+
+    const fab = document.getElementById("whatsappFab");
+    if (CONTACT.whatsapp) { fab.href = whatsappLink(); fab.hidden = false; }
   }
 
   /* ---------------------------------------------------------------
@@ -354,6 +383,7 @@
 
     document.getElementById("pmBody").innerHTML =
       '<h3 id="pmTitle">' + esc(p.title) + "</h3>" +
+      (p.status ? '<span class="project-status inline">' + esc(p.status) + "</span>" : "") +
       shotsHTML +
       "<p>" + esc(p.description) + "</p>" +
       tagsHTML(p.technologies) +
@@ -429,7 +459,213 @@
   }
 
   /* ---------------------------------------------------------------
-     8. SCROLL REVEAL + START-UP
+     8. SCROLL BACKGROUND
+     Sets --scroll (0 at the top, 1 at the bottom) on <html>. The CSS
+     uses it to drift the background glows and fill the progress bar.
+     --------------------------------------------------------------- */
+
+  function setupScrollBackground() {
+    const root = document.documentElement;
+    let ticking = false;
+    function update() {
+      const max = root.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      root.style.setProperty("--scroll", progress.toFixed(4));
+      ticking = false;
+    }
+    function request() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    update();
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // 3D background drawn on a <canvas>: a rotating globe of linked dots
+  // with a ring around it, plus stars you fly through while scrolling.
+  // The globe drifts across the page as you scroll and follows the mouse.
+  function setup3DBackground() {
+    const canvas = document.getElementById("bg3d");
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext("2d");
+    let w = 0, h = 0, small = false;
+    let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+
+    // Globe: points spread evenly over a sphere (Fibonacci sphere)
+    const count = window.innerWidth < 700 ? 150 : 240;
+    const globe = [];
+    for (let i = 0; i < count; i++) {
+      const y = 1 - (i / (count - 1)) * 2;
+      const r = Math.sqrt(1 - y * y);
+      const angle = i * 2.399963;              // golden angle
+      globe.push([Math.cos(angle) * r, y, Math.sin(angle) * r]);
+    }
+
+    // Link every point to its 3 nearest neighbours (worked out once)
+    const links = [];
+    const seen = {};
+    globe.forEach(function (a, i) {
+      globe
+        .map(function (b, j) {
+          const dx = a[0] - b[0], dy = a[1] - b[1], dz = a[2] - b[2];
+          return { j: j, d: dx * dx + dy * dy + dz * dz };
+        })
+        .sort(function (p, q) { return p.d - q.d; })
+        .slice(1, 4)
+        .forEach(function (n) {
+          const key = Math.min(i, n.j) + "-" + Math.max(i, n.j);
+          if (!seen[key]) { seen[key] = true; links.push([i, n.j]); }
+        });
+    });
+
+    // Tilted ring of dots around the globe
+    const ring = [];
+    for (let i = 0; i < 90; i++) {
+      const a = (i / 90) * Math.PI * 2;
+      ring.push([Math.cos(a) * 1.55, 0, Math.sin(a) * 1.55]);
+    }
+
+    // Stars in a deep box in front of the camera
+    const DEPTH = 1600;
+    const stars = [];
+    for (let i = 0; i < (window.innerWidth < 700 ? 90 : 170); i++) {
+      stars.push({ x: (Math.random() - .5) * 2400, y: (Math.random() - .5) * 1600, z: Math.random() * DEPTH });
+    }
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      w = window.innerWidth; h = window.innerHeight;
+      small = w < 700;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // Rotate a point around the Y axis, then the X axis
+    function rotate(p, ay, ax) {
+      const cy = Math.cos(ay), sy = Math.sin(ay), cx = Math.cos(ax), sx = Math.sin(ax);
+      const x = p[0] * cy - p[2] * sy;
+      const z = p[0] * sy + p[2] * cy;
+      return [x, p[1] * cx - z * sx, p[1] * sx + z * cx];
+    }
+
+    function draw(time) {
+      const t = reduceMotion ? 0 : time / 1000;
+      const max = document.documentElement.scrollHeight - h;
+      const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      mouseX += (targetX - mouseX) * .05;
+      mouseY += (targetY - mouseY) * .05;
+      ctx.clearRect(0, 0, w, h);
+
+      // Stars: move towards the camera as you scroll
+      const fov = h * .9;
+      stars.forEach(function (s) {
+        let z = (s.z - window.scrollY * .6 - t * 25) % DEPTH;
+        if (z < 0) z += DEPTH;
+        z += 40;
+        const k = fov / z;
+        const px = w / 2 + (s.x - mouseX * 60) * k;
+        const py = h / 2 + (s.y - mouseY * 40) * k;
+        if (px < 0 || px > w || py < 0 || py > h) return;
+        const near = 1 - z / (DEPTH + 40);
+        ctx.fillStyle = "rgba(200, 225, 255, " + (near * .8).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.arc(px, py, .4 + near * 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Globe position: starts on the right, drifts left as you scroll
+      const R = Math.min(w, h) * (small ? .42 : .34);
+      const cx = small ? w * .5 : w * (.74 - progress * .48);
+      const cy = h * (small ? .42 : .5) + Math.sin(t * .6) * 10;
+      const ay = t * .12 + progress * Math.PI * 1.6 + mouseX * .35;
+      const ax = -.35 + mouseY * .25 + progress * .5;
+      const cam = 3.2;
+
+      function project(p) {
+        const k = cam / (cam + p[2]);
+        return { x: cx + p[0] * R * k, y: cy + p[1] * R * k, front: (1 - p[2]) / 2 };
+      }
+
+      const pts = globe.map(function (p) { return project(rotate(p, ay, ax)); });
+
+      ctx.lineWidth = 1;
+      links.forEach(function (l) {
+        const a = pts[l[0]], b = pts[l[1]];
+        const alpha = ((a.front + b.front) / 2) * .32 + .03;
+        ctx.strokeStyle = "rgba(34, 211, 238, " + alpha.toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      });
+
+      pts.forEach(function (p, i) {
+        const mix = (globe[i][1] + 1) / 2;       // top cyan, bottom purple
+        const r = Math.round(34 + mix * 134), g = Math.round(211 - mix * 126), b = Math.round(238 + mix * 9);
+        ctx.fillStyle = "rgba(" + r + ", " + g + ", " + b + ", " + (.25 + p.front * .75).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, .8 + p.front * 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Ring, spinning on its own tilted axis
+      ring.forEach(function (p) {
+        const q = project(rotate(rotate(p, -t * .3, .45), ay * .3, ax));
+        ctx.fillStyle = "rgba(168, 85, 247, " + (.15 + q.front * .6).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, .6 + q.front * 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    let running = false;
+    function loop(time) {
+      if (document.hidden) { running = false; return; }   // pause in background tabs
+      draw(time);
+      requestAnimationFrame(loop);
+    }
+    function start() {
+      if (reduceMotion) { draw(0); return; }
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    }
+
+    window.addEventListener("resize", function () { resize(); if (reduceMotion) draw(0); });
+    window.addEventListener("pointermove", function (e) {
+      targetX = e.clientX / window.innerWidth - .5;
+      targetY = e.clientY / window.innerHeight - .5;
+    }, { passive: true });
+    if (reduceMotion) window.addEventListener("scroll", function () { draw(0); }, { passive: true });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) start(); });
+    resize();
+    start();
+  }
+
+  // Cards lean towards the mouse in 3D, with a soft light reflection
+  function setupTilt() {
+    if (reduceMotion || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    document.querySelectorAll(".project-card, .skill-card, .info-card, .hero-photo").forEach(function (el) {
+      el.classList.add("tilt");
+      el.addEventListener("pointermove", function (e) {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        el.style.setProperty("--ry", (x * 12).toFixed(2) + "deg");
+        el.style.setProperty("--rx", (-y * 12).toFixed(2) + "deg");
+        el.style.setProperty("--gx", ((x + .5) * 100).toFixed(1) + "%");
+        el.style.setProperty("--gy", ((y + .5) * 100).toFixed(1) + "%");
+      });
+      el.addEventListener("pointerleave", function () {
+        el.style.setProperty("--rx", "0deg");
+        el.style.setProperty("--ry", "0deg");
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     9. SCROLL REVEAL + START-UP
      --------------------------------------------------------------- */
 
   function setupReveal() {
@@ -471,11 +707,15 @@
   renderProjects();
   renderAchievements();
   renderContact();
+  renderSocial();
   setupNavigation();
   setupFilters();
   setupLightbox();
   setupProjectModal();
   setupContactForm();
   setupResume();
+  setupScrollBackground();
+  setup3DBackground();
+  setupTilt();
   setupReveal();
 })();

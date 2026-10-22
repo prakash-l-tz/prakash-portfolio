@@ -21,8 +21,10 @@
 const CONTACT = {
   email: "",                                   // e.g. "prakash@example.com" (also enables the message form)
   github: "https://github.com/prakash-l-tz",
-  linkedin: "",                                // e.g. "https://www.linkedin.com/in/your-profile"
+  linkedin: "https://www.linkedin.com/in/prakash-l-64017028a/",
   phone: "+91 75388 95821",                    // shown as a "Call" link; set to "" to hide
+  whatsapp: "917538895821",                    // country code + number, digits only (opens a WhatsApp chat)
+  instagram: "https://www.instagram.com/ohh_itz.prakash/",
   location: "Tamil Nadu, India",
 
   // Put your PDF in assets/resume/ and type its file name here.
@@ -93,45 +95,56 @@ const SKILLS = [
    To ADD a project: copy one { ... } block, paste it, and edit it.
    To REMOVE a project: delete its whole { ... }, block.
 
-   image:       screenshot in assets/projects/ ("" shows a clean placeholder)
+   image:       picture in assets/projects/ ("" shows a clean placeholder)
+   status:      optional badge on the picture, e.g. "Coming soon"
    screenshots: optional extra images shown when "View Project" is clicked
    link:        GitHub / Play Store / demo URL ("" if the code is private)
    --------------------------------------------------------------------- */
 const PROJECTS = [
   {
-    title: "MAHLE ServicePRO",
-    image: "",                                 // e.g. "assets/projects/servicepro.jpg"
+    title: "BMI Calculator",
+    image: "assets/projects/bmi-calculator.svg",
     screenshots: [],
-    description: "Worked on vehicle diagnostic features including ECU detection, ECU status handling, DTC reading and live vehicle parameters.",
-    technologies: ["Flutter", "Diagnostics", "Vehicle data"],
+    description: "Enter your height and weight to get your Body Mass Index instantly, with a colour-coded gauge that shows which range you fall in.",
+    technologies: ["Flutter", "Dart", "UI design"],
     link: "",
-    note: "Company project at Tamilzorous. Source code is private.",
+    note: "",
   },
   {
-    title: "TechPRO Advance",
-    image: "",
+    title: "Rescue App",
+    image: "assets/projects/rescue-app.svg",
     screenshots: [],
-    description: "Contributed to manual ECU selection, ECU connection status and diagnostic workflow improvements.",
-    technologies: ["Android", "Flutter", "Debugging"],
+    description: "An emergency help app: one tap on SOS shares your live location with emergency contacts so help can reach you quickly.",
+    technologies: ["Flutter", "Location", "Maps"],
     link: "",
-    note: "Company project at Tamilzorous. Source code is private.",
+    note: "",
   },
   {
-    title: "RideScan",
-    image: "",
+    title: "Trip Application",
+    image: "assets/projects/trip-app.svg",
     screenshots: [],
-    description: "Worked on DTC parsing, vehicle configuration, diagnostic features and application testing support.",
-    technologies: ["Diagnostics", "REST API", "Testing"],
+    description: "Plan trips in one place: pick a destination, see a day-by-day itinerary and keep all your travel details together.",
+    technologies: ["Flutter", "Dart", "REST API"],
     link: "",
-    note: "Company project at Tamilzorous. Source code is private.",
+    note: "",
   },
   {
-    title: "Personal Portfolio Website",
-    image: "",
+    title: "My Fleet",
+    status: "Coming soon",                      // shows a "Coming soon" badge; set to "" when it launches
+    image: "assets/projects/my-fleet.svg",
     screenshots: [],
-    description: "This responsive portfolio, built with HTML, CSS and vanilla JavaScript and hosted free on GitHub Pages.",
-    technologies: ["HTML", "CSS", "JavaScript", "GitHub Pages"],
-    link: "https://github.com/prakash-l-tz",
+    description: "A fleet management app to track vehicles on a live map, see each vehicle's status and manage trips from one dashboard.",
+    technologies: ["Flutter", "Maps", "Fleet tracking"],
+    link: "",
+    note: "This project is currently in development.",
+  },
+  {
+    title: "Car Game",
+    image: "assets/projects/car-game.svg",
+    screenshots: [],
+    description: "A fast-paced racing game: dodge traffic, keep your speed up and beat your high score.",
+    technologies: ["Game development", "Animation"],
+    link: "",
     note: "",
   },
 ];
